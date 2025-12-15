@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Virtual env
+.venv/
+
+# Env vars
+.env
+
+# OS / IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Local data (we will generate runs later)
+data/runs/
