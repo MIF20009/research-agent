@@ -1,0 +1,15 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: research_agent_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: m21faour
+      POSTGRES_DB: research_agent
+    ports:
+      - "5432:5432"
+    volumes:
+      - research_agent_pgdata:/var/lib/postgresql/data
+
+volumes:
+  research_agent_pgdata:
