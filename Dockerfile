@@ -14,7 +14,9 @@ COPY alembic.ini /app/alembic.ini
 
 # Install dependencies (we’ll keep it simple for now using pip)
 # If you're using pyproject/poetry later, we’ll upgrade this.
-RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy psycopg[binary] alembic python-dotenv pgvector
+RUN pip install --no-cache-dir \
+    fastapi uvicorn sqlalchemy psycopg[binary] alembic python-dotenv pgvector \
+    langchain openai langgraph requests
 
 EXPOSE 8000
 
