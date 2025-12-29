@@ -1,23 +1,29 @@
+from src.app.services.extraction_service import save_extraction
 from src.app.graph.state import AgentState
+from src.app.tools.openai_client import extract_paper_fields
 
 
 def extractor_agent(state: AgentState) -> AgentState:
+    db = state["db"]
+    run_id = state["run_id"]
     papers = state.get("papers", [])
     extractions = []
 
     for p in papers:
+        title = p.get("title") or ""
+        abstract = p.get("abstract") or ""
+        paper_id = p.get("id")
+
+        extracted = extract_paper_fields(title=title, abstract=abstract)
+
+        # Persist extraction
+        save_extraction(db, run_id=run_id, paper_id=paper_id, data=extracted)
+
+        # Also keep it in state for the next agents
         extractions.append({
-            "paper_source": p.get("source"),
-            "paper_source_id": p.get("source_id"),
-            "title": p.get("title"),
-            "year": p.get("year"),
-            "doi": p.get("doi"),
-            "url": p.get("url"),
-            # placeholders for now – later we will use LLMs to fill these
-            "problem": "TODO: problem (LLM extraction)",
-            "method": "TODO: method (LLM extraction)",
-            "result": "TODO: result (LLM extraction)",
-            "limitation": "TODO: limitation (LLM extraction)",
+            "paper_id": paper_id,
+            "title": title,
+            "extracted": extracted,
         })
 
     state["extractions"] = extractions
