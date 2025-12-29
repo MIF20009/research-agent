@@ -14,6 +14,10 @@ def _strip_code_fences(s: str) -> str:
     s = re.sub(r"\s*```$", "", s)
     return s.strip()
 
+def embed_text(text: str) -> list[float]:
+    model = os.getenv("OPENAI_EMBED_MODEL", "text-embedding-3-small")
+    resp = client.embeddings.create(model=model, input=text)
+    return resp.data[0].embedding
 
 def extract_paper_fields(title: str, abstract: str) -> Dict[str, Any]:
     model = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")

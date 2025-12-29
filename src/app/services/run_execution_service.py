@@ -30,6 +30,7 @@ def execute_run(db: Session, run: Run):
         db.commit()
 
     except Exception as e:
+        db.rollback()
         run.status = RunStatus.FAILED.value
         db.commit()
         raise e

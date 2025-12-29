@@ -6,9 +6,9 @@ from src.app.services.paper_service import upsert_paper
 def retriever_agent(state: AgentState) -> AgentState:
     topic = state["topic"]
     db = state["db"]
-    papers = retrieve_papers_for_topic(topic, max_results=10)
 
-    # Persist into DB
+    papers = retrieve_papers_for_topic(db, topic, max_results=10)
+
     saved = []
     for p in papers:
         row = upsert_paper(db, p)
@@ -23,6 +23,5 @@ def retriever_agent(state: AgentState) -> AgentState:
             "url": row.url,
         })
 
-    # Put saved papers (with DB id) into state
     state["papers"] = saved
     return state
