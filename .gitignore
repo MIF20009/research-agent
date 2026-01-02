@@ -1,21 +1,66 @@
-# Python
+# Root .gitignore for research-agent monorepo
+
+# General OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Docker volumes (if not using named volumes)
+docker-volumes/
+
+# Local development files
+.local
+dev.db
+dev.sqlite
+
+# Build artifacts (catch-all for any missed builds)
+build/
+dist/
+*.tgz
+*.tar.gz
+
+# Node.js (if any global installs)
+.npm/
+.yarn/
+
+# Python bytecode (if any root-level Python files)
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.pytest_cache/
-.mypy_cache/
 
-# Virtual env
-.venv/
+# Coverage reports
+coverage/
+.coverage
+htmlcov/
 
-# Env vars
-.env
-
-# OS / IDE
-.vscode/
-.idea/
-.DS_Store
-
-# Local data (we will generate runs later)
-data/runs/
+# Note: Specific .gitignore files exist in backend/ and frontend/ folders
+# This root .gitignore covers general patterns and monorepo-wide ignores

@@ -19,6 +19,15 @@ def create_run_endpoint(payload: RunCreate, db: Session = Depends(get_db)):
 def list_runs_endpoint(db: Session = Depends(get_db)):
     return list_runs(db)
 
+
+@router.get("/{run_id}", response_model=RunOut)
+def get_run_endpoint(run_id: int, db: Session = Depends(get_db)):
+    run = db.get(Run, run_id)
+    if not run:
+        raise HTTPException(status_code=404, detail="Run not found")
+    return run
+
+
 @router.post("/{run_id}/execute")
 def execute_run_endpoint(run_id: int, db: Session = Depends(get_db)):
     run = db.get(Run, run_id)

@@ -70,7 +70,7 @@ def generate_review_outputs(topic: str, evidence: str) -> Dict[str, Any]:
     Task:
     Return ONLY valid JSON with keys:
     1) synthesis: a short literature overview (8-12 lines), grouping papers into themes/trends.
-    2) gaps: list 5-8 bullet points of open research gaps AND contradictions (if any). Each bullet must reference paper titles (short).
+    2) gaps: list 3-5 bullet points of open research gaps AND contradictions (if none, return empty array []). Each bullet must reference paper titles (short).
     3) hypotheses: a JSON array of 3–5 objects.
         Each object MUST have exactly these keys:
         - hypothesis
@@ -80,7 +80,7 @@ def generate_review_outputs(topic: str, evidence: str) -> Dict[str, Any]:
 
     Rules:
     - Do NOT invent citations. Use only paper titles that appear in the evidence pack.
-    - If contradictions cannot be found, say "No clear contradictions found" as one bullet.
+    - Do NOT add "No clear contradictions found" anywhere. If none, contradictions must be [].
     """.strip()
 
     resp = client.chat.completions.create(
