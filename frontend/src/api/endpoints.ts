@@ -13,6 +13,18 @@ export const runsApi = {
   getRun: (id: number): Promise<Run> =>
     apiClient.get(`/runs/${id}`).then(res => res.data),
 
+  uploadPapers: (id: number, files: File[]): Promise<any> => {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
+    return apiClient.post(`/runs/${id}/upload-papers`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then(res => res.data);
+  },
+
   executeRun: (id: number): Promise<void> =>
     apiClient.post(`/runs/${id}/execute`),
 

@@ -64,12 +64,14 @@ export const Dashboard: React.FC = () => {
                   <p className="text-sm text-gray-600 mb-4">
                     Created: {formatDate(run.created_at)}
                   </p>
-                  <Link to={`/runs/${run.id}`}>
-                    <Button variant="outline" className="w-full flex items-center justify-center space-x-2">
-                      <ExternalLink className="h-4 w-4" />
-                      <span>Open</span>
-                    </Button>
-                  </Link>
+                  <div className="mt-auto">
+                    <Link to={`/runs/${run.id}`}>
+                      <Button variant="outline" className="w-full flex items-center justify-center space-x-2">
+                        <ExternalLink className="h-4 w-4" />
+                        <span>Open</span>
+                      </Button>
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             ))

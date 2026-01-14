@@ -2,6 +2,7 @@ export interface Run {
   id: number;
   topic: string;
   status: string;
+  upload_papers: boolean;
   created_at: string;
 }
 
@@ -14,6 +15,7 @@ export interface Artifact {
 
 export interface CreateRunRequest {
   topic: string;
+  upload_papers: boolean;
 }
 
 export interface HealthResponse {

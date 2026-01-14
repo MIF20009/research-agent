@@ -8,7 +8,7 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ className, children }) => {
   return (
-    <div className={clsx('bg-white rounded-lg shadow-md border border-gray-200 p-6', className)}>
+    <div className={clsx('bg-white rounded-lg shadow-md border border-gray-200 p-6 flex flex-col h-full', className)}>
       {children}
     </div>
   );
@@ -47,7 +47,7 @@ interface CardContentProps {
 
 export const CardContent: React.FC<CardContentProps> = ({ className, children }) => {
   return (
-    <div className={clsx('', className)}>
+    <div className={clsx('flex flex-col flex-grow', className)}>
       {children}
     </div>
   );
