@@ -6,6 +6,7 @@ def create_run(db= Session, payload= RunCreate) -> Run:
     run = Run(
         topic = payload.topic,
         notes = payload.notes,
+        upload_papers = payload.upload_papers,
         status = "created"
     )
     db.add(run)

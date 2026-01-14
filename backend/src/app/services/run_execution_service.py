@@ -3,6 +3,7 @@ from src.app.db.models.run import Run
 from src.app.core.enums import RunStatus
 from src.app.graph.lit_review_graph import build_lit_review_graph
 from src.app.services.artifact_service import save_artifact
+from src.app.services.paper_service import get_papers_for_run
 
 
 def execute_run(db: Session, run: Run):
@@ -14,7 +15,18 @@ def execute_run(db: Session, run: Run):
         # 2. agent pipeline execution
         graph = build_lit_review_graph()
 
-        initial_state = {"run_id": run.id, "topic": run.topic, "db": db}
+        # Get papers if they were uploaded with this run
+        papers = []
+        if run.upload_papers:
+            papers = get_papers_for_run(db, run.id)
+
+        initial_state = {
+            "run_id": run.id,
+            "topic": run.topic,
+            "upload_papers": run.upload_papers,
+            "papers": papers,
+            "db": db
+        }
         final_state = graph.invoke(initial_state)
 
         # Save artifacts (so you can view results)

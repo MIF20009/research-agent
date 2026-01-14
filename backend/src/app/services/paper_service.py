@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 from src.app.db.models.paper import Paper
+from src.app.db.models.run_paper import RunPaper
 
 
 def upsert_paper(db: Session, data: Dict[str, Any]) -> Paper:
@@ -40,3 +41,32 @@ def upsert_paper(db: Session, data: Dict[str, Any]) -> Paper:
     db.commit()
     db.refresh(paper)
     return paper
+
+
+def link_paper_to_run(db: Session, run_id: int, paper_id: int) -> RunPaper:
+    """Link a paper to a run"""
+    run_paper = RunPaper(run_id=run_id, paper_id=paper_id)
+    db.add(run_paper)
+    db.commit()
+    db.refresh(run_paper)
+    return run_paper
+
+
+def get_papers_for_run(db: Session, run_id: int) -> List[Dict[str, Any]]:
+    """Get all papers linked to a run formatted for agent processing"""
+    stmt = select(Paper).join(RunPaper).where(RunPaper.run_id == run_id)
+    papers = db.execute(stmt).scalars().all()
+    
+    return [
+        {
+            "id": p.id,
+            "source": p.source,
+            "source_id": p.source_id,
+            "title": p.title,
+            "year": p.year,
+            "doi": p.doi,
+            "abstract": p.abstract,
+            "url": p.url,
+        }
+        for p in papers
+    ]

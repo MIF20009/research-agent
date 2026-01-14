@@ -6,6 +6,10 @@ from src.app.services.paper_service import upsert_paper
 def retriever_agent(state: AgentState) -> AgentState:
     topic = state["topic"]
     db = state["db"]
+    
+    # If papers are already in state (from upload), skip retrieval
+    if state.get("papers"):
+        return state
 
     papers = retrieve_papers_for_topic(db, topic, max_results=10)
 

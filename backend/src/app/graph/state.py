@@ -6,6 +6,7 @@ class AgentState(TypedDict, total=False):
     db: Session
     run_id: int
     topic: str
+    upload_papers: bool
 
     papers: List[Dict[str, Any]]
     extractions: List[Dict[str, Any]]
